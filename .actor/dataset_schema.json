@@ -1,0 +1,108 @@
+{
+  "actorSpecification": 1,
+  "views": {
+    "overview": {
+      "title": "Roster players",
+      "transformation": {
+        "fields": [
+          "team_name",
+          "season",
+          "full_name",
+          "first_name",
+          "last_name",
+          "jersey_number",
+          "position",
+          "height",
+          "height_inches",
+          "weight",
+          "class_year",
+          "hometown",
+          "high_school",
+          "previous_school",
+          "source_platform",
+          "player_profile_url",
+          "headshot_url",
+          "headshot_confidence",
+          "roster_url",
+          "extraction_method",
+          "scraped_at",
+          "diagnostic_reason"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "team_name": {
+            "label": "Team"
+          },
+          "season": {
+            "label": "Season"
+          },
+          "full_name": {
+            "label": "Full name"
+          },
+          "first_name": {
+            "label": "First"
+          },
+          "last_name": {
+            "label": "Last"
+          },
+          "jersey_number": {
+            "label": "#"
+          },
+          "position": {
+            "label": "Pos"
+          },
+          "height": {
+            "label": "Ht"
+          },
+          "height_inches": {
+            "label": "Ht inches"
+          },
+          "weight": {
+            "label": "Wt"
+          },
+          "class_year": {
+            "label": "Class"
+          },
+          "hometown": {
+            "label": "Hometown"
+          },
+          "high_school": {
+            "label": "High school"
+          },
+          "previous_school": {
+            "label": "Previous school"
+          },
+          "player_profile_url": {
+            "label": "Profile URL",
+            "format": "link"
+          },
+          "headshot_url": {
+            "label": "Headshot URL",
+            "format": "image"
+          },
+          "headshot_confidence": {
+            "label": "Photo confidence"
+          },
+          "roster_url": {
+            "label": "Roster URL",
+            "format": "link"
+          },
+          "scraped_at": {
+            "label": "Scraped at"
+          },
+          "source_platform": {
+            "label": "Platform"
+          },
+          "extraction_method": {
+            "label": "Extractor"
+          },
+          "diagnostic_reason": {
+            "label": "Diagnostic"
+          }
+        }
+      }
+    }
+  }
+}

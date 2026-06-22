@@ -1,0 +1,16 @@
+{
+  "useDefaultFcsUrls": true,
+  "season": "2025",
+  "sport": "football",
+  "maxRosterUrls": 5,
+  "maxPlayersPerTeam": 0,
+  "adapterMode": "auto",
+  "emitDiagnosticRows": false,
+  "maxConcurrency": 3,
+  "maxRequestRetries": 2,
+  "requestHandlerTimeoutSecs": 45,
+  "navigationTimeoutSecs": 30,
+  "useSessionPool": true,
+  "respectRobotsTxtFile": false,
+  "startUrls": []
+}

@@ -1,0 +1,124 @@
+{
+  "title": "College Football Roster Scraper Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "useDefaultFcsUrls": {
+      "title": "Use bundled FCS roster URL dataset",
+      "type": "boolean",
+      "description": "When enabled, the Actor uses the bundled 2025 FCS roster URL list as the demo/default source set. Add startUrls below to merge custom URLs into the run.",
+      "default": true,
+      "editor": "checkbox"
+    },
+    "startUrls": {
+      "title": "Additional roster URLs",
+      "type": "array",
+      "description": "Optional additional college football roster page URLs. Each item can include userData.team_name.",
+      "editor": "requestListSources",
+      "default": []
+    },
+    "season": {
+      "title": "Season label",
+      "type": "string",
+      "description": "Optional season value to place on each result. If blank, the Actor tries to infer it from /roster/2025-style URLs.",
+      "default": "2025",
+      "editor": "textfield"
+    },
+    "sport": {
+      "title": "Sport label",
+      "type": "string",
+      "description": "Output label. Keep as football for this Actor unless adapting the selectors for another sport.",
+      "default": "football",
+      "editor": "textfield"
+    },
+    "maxRosterUrls": {
+      "title": "Max roster URLs",
+      "type": "integer",
+      "description": "Safety cap for the number of roster pages to crawl. Set to 0 to run the full bundled/default list.",
+      "default": 10,
+      "minimum": 0,
+      "editor": "number"
+    },
+    "maxPlayersPerTeam": {
+      "title": "Max players per team",
+      "type": "integer",
+      "description": "Optional cap per roster page. Set to 0 for no cap.",
+      "default": 0,
+      "minimum": 0,
+      "editor": "number"
+    },
+    "adapterMode": {
+      "title": "Adapter mode",
+      "type": "string",
+      "description": "Auto runs the platform/domain adapters plus safe fallbacks. Use a specific adapter only for debugging a problem domain.",
+      "default": "auto",
+      "enum": [
+        "auto",
+        "sidearm",
+        "presto",
+        "json-state",
+        "table",
+        "generic-card"
+      ],
+      "editor": "select"
+    },
+    "emitDiagnosticRows": {
+      "title": "Emit diagnostic rows for zero-player pages",
+      "type": "boolean",
+      "description": "When enabled, pages with no extracted players add a visible diagnostic row to the dataset. Detailed diagnostics are always saved in ZERO_PLAYER_PAGES and RUN_SUMMARY key-value records.",
+      "default": false,
+      "editor": "checkbox"
+    },
+    "maxConcurrency": {
+      "title": "Max concurrency",
+      "type": "integer",
+      "description": "How many roster pages to fetch in parallel. Keep moderate for school athletics sites.",
+      "default": 10,
+      "minimum": 1,
+      "maximum": 50,
+      "editor": "number"
+    },
+    "maxRequestRetries": {
+      "title": "Max request retries",
+      "type": "integer",
+      "description": "Number of retries for failed roster page requests.",
+      "default": 2,
+      "minimum": 0,
+      "maximum": 5,
+      "editor": "number"
+    },
+    "requestHandlerTimeoutSecs": {
+      "title": "Request handler timeout seconds",
+      "type": "integer",
+      "description": "How long to allow extraction from each roster page before timing out.",
+      "default": 45,
+      "minimum": 10,
+      "maximum": 180,
+      "editor": "number"
+    },
+    "navigationTimeoutSecs": {
+      "title": "Navigation timeout seconds",
+      "type": "integer",
+      "description": "How long to wait for each page HTTP response.",
+      "default": 30,
+      "minimum": 10,
+      "maximum": 120,
+      "editor": "number"
+    },
+    "useSessionPool": {
+      "title": "Use session pool",
+      "type": "boolean",
+      "description": "Keep enabled for more stable crawling across many athletics domains.",
+      "default": true,
+      "editor": "checkbox"
+    },
+    "respectRobotsTxtFile": {
+      "title": "Respect robots.txt",
+      "type": "boolean",
+      "description": "Enable this if you want the crawler to obey robots.txt for each domain. You should still review source-site terms before commercial reuse.",
+      "default": false,
+      "editor": "checkbox"
+    }
+  },
+  "required": []
+}

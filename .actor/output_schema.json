@@ -1,0 +1,21 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "College Football Roster Scraper Output",
+  "properties": {
+    "players": {
+      "type": "string",
+      "title": "Scraped player rows",
+      "template": "{{links.apiDefaultDatasetUrl}}/items"
+    },
+    "runSummary": {
+      "type": "string",
+      "title": "Run summary",
+      "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/RUN_SUMMARY"
+    },
+    "zeroPlayerPages": {
+      "type": "string",
+      "title": "Zero-player page diagnostics",
+      "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/ZERO_PLAYER_PAGES"
+    }
+  }
+}
