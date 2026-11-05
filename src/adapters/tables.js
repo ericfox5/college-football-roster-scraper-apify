@@ -76,10 +76,22 @@ function extractHeaderTable({ $, table, headers, headerRowIndex, pageUrl, teamNa
 
   if (index.name === -1) return out;
 
+  // Presto-style tables repeat the column label inside each cell for small screens ("<span class=label>Pos.:</span> LB")
+  // and combine "Hometown/Last School" into one cell ("Lynn, MA / Lynn Classical (Wagner)").
+  const cellText = (td, headerIdx) => {
+    const copy = $(td).clone();
+    copy.find('span.label, .sr-only, .visually-hidden').remove();
+    let value = clean(copy.text());
+    const header = clean(headers[headerIdx] || '');
+    if (header && value.toLowerCase().startsWith(`${header.toLowerCase()}:`)) value = clean(value.slice(header.length + 1));
+    return value;
+  };
+  const combinedHometown = index.hometown >= 0 && /hometown.*(last school|high school|school)/i.test(headers[index.hometown] || '');
+
   table.find('tbody tr, tr').each((rowNumber, rowEl) => {
     if (rowNumber <= headerRowIndex) return;
     const row = $(rowEl);
-    const cells = row.find('td,th').map((__, td) => clean($(td).text())).get();
+    const cells = row.find('td,th').map((i, td) => cellText(td, i)).get();
     if (cells.length <= index.name) return;
 
     const rowText = clean(row.text());
@@ -89,12 +101,27 @@ function extractHeaderTable({ $, table, headers, headerRowIndex, pageUrl, teamNa
     const profileHref = getProfileHref($, nameCell, pageUrl, input.sport || 'football') || getProfileHref($, row, pageUrl, input.sport || 'football');
     const profileUrl = absUrl(profileHref, pageUrl);
 
-    let fullName = cleanName(cellAt(cells, index.name) || clean(nameCell.text()));
+    // the name cell may hold the name twice (visible link + print-only link): prefer the first link's text
+    let fullName = cleanName(clean(nameCell.find('a').first().text()) || cellAt(cells, index.name) || clean(nameCell.text()));
     if (looksBadName(fullName)) fullName = nameFromProfileUrl(profileUrl);
     if (looksBadName(fullName)) return;
 
     const photo = bestImage($, row, pageUrl, fullName);
     const parsed = parseFreeText(rowText);
+
+    let hometown = cellAt(cells, index.hometown);
+    let highSchool = cellAt(cells, index.highSchool);
+    let previousSchool = cellAt(cells, index.previousSchool);
+    if (combinedHometown && hometown.includes(' / ')) {
+      if (index.previousSchool === index.hometown) previousSchool = '';
+      if (index.highSchool === index.hometown) highSchool = '';
+      const [town, ...rest] = hometown.split(' / ');
+      hometown = clean(town);
+      let school = clean(rest.join(' / '));
+      const prev = school.match(/\(([^)]+)\)\s*$/);
+      if (prev) { previousSchool = previousSchool || clean(prev[1]); school = clean(school.replace(/\([^)]+\)\s*$/, '')); }
+      highSchool = highSchool || school;
+    }
 
     out.push({
       team_name: teamName,
@@ -108,9 +135,9 @@ function extractHeaderTable({ $, table, headers, headerRowIndex, pageUrl, teamNa
       height: cellAt(cells, index.height) || parsed.height,
       weight: cellAt(cells, index.weight) || parsed.weight,
       class_year: cellAt(cells, index.classYear) || parsed.class_year,
-      hometown: cellAt(cells, index.hometown),
-      high_school: cellAt(cells, index.highSchool),
-      previous_school: cellAt(cells, index.previousSchool),
+      hometown,
+      high_school: highSchool,
+      previous_school: previousSchool,
       extraction_method: 'header_table',
     });
   });

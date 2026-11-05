@@ -1,13 +1,15 @@
 {
   "name": "college-football-roster-scraper-apify",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Generic Apify Actor for scraping public college football roster pages into normalized player-only rows.",
   "type": "module",
   "main": "src/main.js",
   "scripts": {
     "start": "node src/main.js",
-    "check": "node --check src/main.js && node --check src/extractors.js && node --check src/lib/utils.js && node --check src/adapters/index.js && node --check src/adapters/sidearm.js && node --check src/adapters/presto.js && node --check src/adapters/jsonState.js && node --check src/adapters/tables.js && node --check src/adapters/genericCards.js && node --check src/default-fcs-roster-urls.js && node --check tests/run-fixtures.js",
-    "test:fixtures": "node tests/run-fixtures.js"
+    "check": "node --check src/main.js && node --check src/extractors.js && node --check src/lib/utils.js && node --check src/adapters/index.js && node --check src/adapters/sidearm.js && node --check src/adapters/sidearmNextgen.js && node --check src/adapters/presto.js && node --check src/adapters/jsonState.js && node --check src/adapters/tables.js && node --check src/adapters/genericCards.js && node --check src/default-fcs-roster-urls.js && node --check tests/run-fixtures.js",
+    "test:fixtures": "node tests/run-fixtures.js",
+    "test:real": "node tests/run-real-fixtures.js",
+    "test": "npm run check && npm run test:fixtures && npm run test:real"
   },
   "dependencies": {
     "apify": "^3.5.0",

@@ -38,22 +38,26 @@ Each player row is pushed to the default Apify dataset with fields like:
 
 ## Included adapters
 
-The Actor runs these adapters in `auto` mode:
+The Actor runs these adapters in `auto` mode. The platform adapters (Sidearm nextgen, Sidearm, Presto) run first; the heuristic adapters (JSON state, tables, generic cards) only run when the platform adapters found fewer than 15 players on the page, so they cannot add duplicate or partial rows to a page that was already read correctly (`alwaysRunFallbacks: true` in the input forces them on). Presto header tables with a combined `Hometown/Last School` column are split into hometown, high school and previous school.
 
-1. **Sidearm adapter**
+1. **Sidearm nextgen adapter** (added 2026-11)
+   - Targets the Nuxt-rendered Sidearm roster pages (`.s-person-card` with `data-test-id` fields) that about a third of FCS sites moved to in 2025-26. The classic adapter finds nothing on them.
+   - Reads name, jersey, position, class, height, weight, hometown, last school and the full-size headshot (the `images.sidearmdev.com/crop?url=...` thumbnail is decoded to the original image URL).
+
+2. **Sidearm adapter**
    - Targets `.sidearm-roster-player` and related roster-card classes.
    - Handles duplicate card layouts and `View Bio`/`Full Bio` noise.
    - Recovers names from profile URL slugs when the visible link text is useless.
 
-2. **Presto-style adapter**
+3. **Presto-style adapter**
    - Targets common Presto roster/card wrappers and falls back to the table parser.
    - Useful for smaller-school athletics sites with less consistent markup.
 
-3. **JSON-state adapter**
+4. **JSON-state adapter**
    - Scans valid JSON data in `application/ld+json`, `__NEXT_DATA__`, and state-like script blobs.
    - Extracts player records only when the object has roster-like evidence such as position, jersey, class, height, or weight.
 
-4. **Header table adapter**
+5. **Header table adapter**
    - Uses header names rather than fixed cell indexes.
    - This avoids the earlier failure mode where `cells[0]`, `cells[1]`, etc. misassigned jersey, height, class, and weight on outlier tables.
 

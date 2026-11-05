@@ -201,7 +201,8 @@ export function getProfileHref($, scope, pageUrl, sport = 'football') {
     const href = $(a).attr('href') || '';
     try {
       const abs = new URL(href, pageUrl).href;
-      return /\/roster\//i.test(abs) && !/\/coaches?\//i.test(abs);
+      // Sidearm: /sports/<sport>/roster/<slug>/<id>; Presto: /sports/<code>/<season>/bios/<slug>
+      return /\/(roster|bios)\//i.test(abs) && !/\/coaches?\//i.test(abs);
     } catch {
       return false;
     }
@@ -305,7 +306,7 @@ export function isLikelyPlayer(row) {
   if (/\/coaches?\//i.test(row.player_profile_url || '')) return false;
 
   // Reduce false positives from generic profile cards: players normally have at least one roster attribute or a roster profile link.
-  return Boolean(row.position || row.height || row.weight || row.class_year || row.jersey_number || /\/roster\//i.test(row.player_profile_url || ''));
+  return Boolean(row.position || row.height || row.weight || row.class_year || row.jersey_number || /\/(roster|bios)\//i.test(row.player_profile_url || ''));
 }
 
 export function dedupePlayers(rows) {

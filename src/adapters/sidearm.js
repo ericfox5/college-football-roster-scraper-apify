@@ -15,6 +15,8 @@ import {
 export const sidearmAdapter = {
   name: 'sidearm',
   detect({ $, pageUrl }) {
+    // nextgen (Nuxt) Sidearm pages have none of the classic card classes; sidearmNextgen.js handles them
+    if ($('[data-test-id="s-person-details__root"], .s-person-card').length > 0 && $('.sidearm-roster-player').length === 0) return false;
     const html = $('html').html() || '';
     return /sidearm/i.test(html) || $('.sidearm-roster-player, [class*="sidearm-roster"]').length > 0 || /sidearmsports/i.test(pageUrl);
   },

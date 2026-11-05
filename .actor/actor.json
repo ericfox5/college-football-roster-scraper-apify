@@ -2,8 +2,8 @@
   "actorSpecification": 1,
   "name": "college-football-roster-scraper",
   "title": "College Football Roster Scraper",
-  "description": "Scrape public college football roster pages into normalized player-only rows with adapter support for Sidearm, Presto-style pages, JSON-state pages, table rosters, and generic roster cards.",
-  "version": "0.2",
+  "description": "Scrape public college football roster pages into normalized player-only rows with adapter support for Sidearm (classic and nextgen), Presto-style pages, JSON-state pages, table rosters, and generic roster cards.",
+  "version": "0.3",
   "buildTag": "latest",
   "meta": {
     "templateId": "js-crawlee-cheerio"

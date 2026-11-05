@@ -27,6 +27,34 @@ const fixtures = [
     expect: { count: 1, first: { full_name: 'Jalen Doe', jersey_number: '12', position: 'QB', height_inches: 74, class_year: 'JR' } },
   },
   {
+    name: 'sidearm nextgen card roster',
+    url: 'https://example.edu/sports/football/roster/2026',
+    team: 'Example Nextgen',
+    html: `
+      <html><head><title>2026 Football Roster - Example Nextgen Athletics</title></head><body>
+      <ul data-test-id="roster-view-type-list__list">
+      <li data-test-id="roster-view-type-list__list-item"><div data-test-id="s-person-card-list__root" class="s-person-card s-person-card--list">
+        <div data-test-id="s-person-details__root" class="s-person-details">
+          <a href="/sports/football/roster/ike-odimegwu/23748" aria-label="Ike Odimegwu jersey number 0 full bio" data-test-id="s-person-details__thumbnail-link">
+            <picture data-test-id="s-image-resized__root"><img data-test-id="s-image-resized__img" src="https://images.sidearmdev.com/crop?url=https%3A%2F%2Fdxbhsrqyrr690.cloudfront.net%2Fsidearm.nextgen.sites%2Fexample.sidearmsports.com%2Fimages%2F2026%2F8%2F26%2F0-Odimegwu-headshot-2026-cropped.jpg&amp;width=100&amp;height=100&amp;type=webp" alt></picture>
+            <div class="s-stamp"><span class="s-stamp__text"><span class="sr-only">Jersey Number</span> 0</span></div>
+          </a>
+          <div class="s-person-details__personal"><a href="/sports/football/roster/ike-odimegwu/23748" aria-label="Ike Odimegwu jersey number 0 full bio" data-test-id="s-person-details__personal-single-line-person-link"><h3>Ike Odimegwu</h3></a></div>
+          <div><span data-test-id="s-person-details__bio-stats-person-position-short"><span>Position</span> DL <b><span>Is Captain</span> (C) </b></span><span data-test-id="s-person-details__bio-stats-person-title"><span>Academic Year</span> Sr.</span><span data-test-id="s-person-details__bio-stats-person-season"><span>Height</span> 6&#39; 3&#39;&#39; </span><span data-test-id="s-person-details__bio-stats-person-weight"><span>Weight</span> 240 lbs </span></div>
+        </div>
+        <div><span data-test-id="s-person-card-list__content-location-person-hometown"><svg></svg><span>Hometown</span> Coppell, Texas</span><span data-test-id="s-person-card-list__content-location-person-high-school"><span>Last School</span> Coppell</span></div>
+      </div></li>
+      <li data-test-id="roster-view-type-list__list-item"><div data-test-id="s-person-card-list__root" class="s-person-card s-person-card--list">
+        <div data-test-id="s-person-details__root" class="s-person-details">
+          <a href="/sports/football/coaches/james-perry/1172" aria-label="James Perry full bio" data-test-id="s-person-details__thumbnail-link"><img data-test-id="s-image-resized__img" src="https://images.sidearmdev.com/crop?url=https%3A%2F%2Fcdn.example.edu%2Fimages%2Fperry.jpg&amp;width=100" alt></a>
+          <div class="s-person-details__personal"><a href="/sports/football/coaches/james-perry/1172" data-test-id="s-person-details__personal-single-line-person-link"><h3>James Perry</h3></a></div>
+          <div><span data-test-id="s-person-details__bio-stats-person-title"><span>Title</span> Head Coach</span></div>
+        </div>
+      </div></li>
+      </ul></body></html>`,
+    expect: { count: 1, first: { full_name: 'Ike Odimegwu', jersey_number: '0', position: 'DL', height: "6'3", height_inches: 75, weight: '240', class_year: 'SR', hometown: 'Coppell, Texas', high_school: 'Coppell', headshot_url: 'https://dxbhsrqyrr690.cloudfront.net/sidearm.nextgen.sites/example.sidearmsports.com/images/2026/8/26/0-Odimegwu-headshot-2026-cropped.jpg', extraction_method: 'sidearm_nextgen_card' } },
+  },
+  {
     name: 'header table roster',
     url: 'https://example.edu/sports/football/roster/2025',
     team: 'Example Tech',
