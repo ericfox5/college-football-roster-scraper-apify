@@ -31,9 +31,18 @@ export const sidearmAdapter = {
 
     const out = [];
 
-    $(selectors).each((_, element) => {
+    // The card root is the exact `.sidearm-roster-player` element. The broad `[class*="roster-player"]` selectors
+    // also match the list container (`sidearm-roster-players-container`) and every inner fragment
+    // (`-name-container`, `-height`, ...); with the container counted as the card, the real cards were skipped as
+    // its children and the fragments came out as partial rows. Only fall back to the broad selectors when no exact
+    // card exists.
+    const exact = $('.sidearm-roster-player').toArray();
+    const candidates = exact.length
+      ? exact
+      : $(selectors).toArray().filter((el) => !/roster-players/i.test($(el).attr('class') || '') && !$(el).parents(selectors).length);
+
+    candidates.forEach((element) => {
       const card = $(element);
-      if (card.parents(selectors).length) return;
 
       const cardText = clean(card.text());
       const profileHref = getProfileHref($, card, pageUrl, input.sport || 'football');
@@ -73,17 +82,19 @@ export const sidearmAdapter = {
           parsed.jersey_number,
         ]),
         position: firstValue([
-          textFromSelectors($, card, ['.sidearm-roster-player-position-short', '.sidearm-roster-player-position-long', '.sidearm-roster-player-position', '[class*="position-short"]', '[class*="position-long"]', '[class*="position"]']),
+          // some classic templates put the short code in a bare <span class="text-bold"> inside the position block
+          textFromSelectors($, card, ['.sidearm-roster-player-position-short', '.sidearm-roster-player-position-long-short', '.sidearm-roster-player-position-long', '.sidearm-roster-player-position .text-bold', '.sidearm-roster-player-position', '[class*="position-short"]', '[class*="position-long"]', '[class*="position"]']),
           valueAfterLabels($, card, ['Position', 'Pos.', 'Pos']),
           parsed.position,
         ]),
         height: firstValue([
-          textFromSelectors($, card, ['.sidearm-roster-player-height', '[class*="height"]', '[class*="ht"]']),
+          // no '[class*="ht"]': it matches unrelated classes (e.g. "...-right", "light") and returned fragments of names
+          textFromSelectors($, card, ['.sidearm-roster-player-height', '[class*="height"]']),
           valueAfterLabels($, card, ['Height', 'Ht.', 'Ht']),
           parsed.height,
         ]),
         weight: firstValue([
-          textFromSelectors($, card, ['.sidearm-roster-player-weight', '[class*="weight"]', '[class*="wt"]']),
+          textFromSelectors($, card, ['.sidearm-roster-player-weight', '[class*="weight"]']),
           valueAfterLabels($, card, ['Weight', 'Wt.', 'Wt']),
           parsed.weight,
         ]),

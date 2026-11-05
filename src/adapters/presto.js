@@ -16,6 +16,8 @@ import {
 export const prestoAdapter = {
   name: 'presto',
   detect({ $, pageUrl }) {
+    // a Sidearm page (classic or nextgen) is never a Presto page, even when it contains "roster-list" markup
+    if ($('.sidearm-roster-player, [data-test-id="s-person-details__root"]').length > 0) return false;
     const html = $('html').html() || '';
     return /prestosports|psbin|PrestoSports|roster-list|roster-bio/i.test(html) || /prestosports/i.test(pageUrl);
   },
